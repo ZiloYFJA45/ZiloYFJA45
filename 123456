@@ -1,0 +1,30 @@
+name: Update CSV File
+
+on:
+  schedule:
+    - cron: '0 * * * *' # อัปเดตทุกชั่วโมง
+  push:
+    paths:
+      - 'delta_พอร์ตหลัก_010202025_1 (1).csv'
+
+jobs:
+  update-file:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Update CSV File
+      run: |
+        echo "ทำการอัปเดตไฟล์ CSV ที่นี่"
+        # ตัวอย่างการแก้ไขไฟล์ CSV
+        echo "2025-02-03T01:32:54.000Z,BUY,123456,USD,..." >> delta_พอร์ตหลัก_010202025_1\ \(1\).csv
+
+    - name: Commit and Push changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add delta_พอร์ตหลัก_010202025_1\ \(1\).csv
+        git commit -m "Update CSV file automatically"
+        git push
